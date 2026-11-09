@@ -1,0 +1,13 @@
+.env
+__pycache__/
+*.pyc
+.kaggle/
+.env.*
+!.env.example
+.venv/
+.ipynb_checkpoints/
+data/
+kaggle.json
+secrets.toml
+*.log
+.DS_Store

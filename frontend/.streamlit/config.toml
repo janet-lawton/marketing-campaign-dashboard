@@ -1,0 +1,52 @@
+# Theme for the redesigned dashboard.
+# Streamlit reads this file from the folder where `streamlit run` is called:
+#   <that folder>/.streamlit/config.toml
+# Both [theme.light] and [theme.dark] are defined, so Streamlit's settings
+# menu offers Light, Dark, and Use system setting.
+
+[theme]
+# Work Sans (regular 400 only) for body text, Sora (600) for headings.
+font = "'Work Sans':https://fonts.googleapis.com/css2?family=Work+Sans&display=swap, sans-serif"
+headingFont = "Sora:https://fonts.googleapis.com/css2?family=Sora:wght@600&display=swap, sans-serif"
+baseFontSize = 16
+baseFontWeight = 400
+# 1.25 ratio between heading levels.
+headingFontSizes = ["2.441rem", "1.953rem", "1.563rem", "1.25rem", "1rem", "0.8rem"]
+headingFontWeights = [600, 600, 600, 600, 600, 600]
+metricValueFontSize = "1.25rem"
+metricValueFontWeight = 600
+showSidebarBorder = false
+
+[theme.light]
+primaryColor = "#2f7a60"
+backgroundColor = "#f1f1f1"
+secondaryBackgroundColor = "#ffffff"
+textColor = "#14211d"
+borderColor = "#d9e4df"
+baseRadius = "0.5rem"
+greenColor = "#488f71"
+greenTextColor = "#2f7a60"
+redColor = "#de425b"
+redTextColor = "#b82d44"
+chartCategoricalColors = ["#488f71", "#6aaa96", "#aecdc2", "#f0b8b8", "#e67f83", "#de425b"]
+
+[theme.light.sidebar]
+backgroundColor = "#e6eeea"
+secondaryBackgroundColor = "#ffffff"
+
+[theme.dark]
+primaryColor = "#6aaa96"
+backgroundColor = "#0f1a17"
+secondaryBackgroundColor = "#16241f"
+textColor = "#f1f1f1"
+borderColor = "#24362f"
+baseRadius = "0.5rem"
+greenColor = "#6aaa96"
+greenTextColor = "#6aaa96"
+redColor = "#e67f83"
+redTextColor = "#e67f83"
+chartCategoricalColors = ["#6aaa96", "#488f71", "#aecdc2", "#f0b8b8", "#e67f83", "#de425b"]
+
+[theme.dark.sidebar]
+backgroundColor = "#121f1b"
+secondaryBackgroundColor = "#16241f"

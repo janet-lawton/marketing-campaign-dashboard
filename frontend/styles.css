@@ -1,0 +1,189 @@
+/* styles.css: matches the container keys in frontend/app.py.
+   --card, --card-border, --accent are injected by app.py from the active theme,
+   and kept in sync live by the script in app.py (data-app-theme on <html>).
+   Fallbacks keep cards usable (outline only) if theme detection returns nothing. */
+
+/* ── Theme-change fade ─────────────────────────────────────────────────────── */
+.stApp,
+[data-testid="stSidebar"],
+[data-testid="stHeader"],
+[class*="st-key-card_"] {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+/* ── Line length ───────────────────────────────────────────────────────────── */
+[data-testid="stCaptionContainer"],
+.stMarkdown p {
+  max-width: 65ch;
+  text-wrap: balance; /* even lines instead of one orphaned word */
+}
+
+/* ── KPI cards: compact text that fits six across ──────────────────────────── */
+/* Labels may wrap, but always reserve two lines so every value lines up */
+[data-testid="stMetricLabel"] {
+  min-height: 2.5em;
+  align-items: flex-end;
+}
+[data-testid="stMetricLabel"],
+[data-testid="stMetricLabel"] * {
+  font-size: 0.85rem;
+  line-height: 1.25;
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+}
+
+/* Change pill: one line, smaller text and padding */
+[data-testid="stMetricDelta"] {
+  font-size: 0.72rem;
+  padding: 0.1rem 0.45rem;
+  white-space: nowrap !important;
+}
+[data-testid="stMetricDelta"] * {
+  font-size: inherit;
+  white-space: nowrap !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+}
+[data-testid="stMetricDelta"] svg {
+  width: 0.85em;
+  height: 0.85em;
+}
+
+/* ── Cards ─────────────────────────────────────────────────────────────────── */
+[class*="st-key-card_"] {
+  background: var(--card, transparent);
+  border: 1px solid var(--card-border, rgba(128, 128, 128, 0.3));
+  border-radius: 12px;
+  padding: 1rem 1.1rem;
+  min-width: 0; /* lets charts shrink inside flex columns */
+}
+
+[class*="st-key-card_"] h4 {
+  margin: 0 0 0.5rem;
+  padding: 0;
+}
+
+/* KPI cards are tighter than chart cards */
+[class*="st-key-card_kpi_"] {
+  padding: 0.75rem 0.9rem;
+}
+
+/* The table card holds a title row, a button, and the dataframe */
+.st-key-card_table {
+  margin-top: 0.5rem;
+}
+
+/* ── Spacing between rows ──────────────────────────────────────────────────── */
+.st-key-kpi_row,
+.st-key-insight_row,
+.st-key-chart_row_1,
+.st-key-chart_row_2 {
+  margin-bottom: 0.75rem;
+}
+
+/* ── Sidebar filters: flat expanders with the caret next to the label ──────── */
+[data-testid="stSidebar"] [data-testid="stExpander"] {
+  border: none;
+  border-bottom: 1px solid var(--card-border, rgba(128, 128, 128, 0.25));
+  border-radius: 0;
+  background: transparent;
+}
+[data-testid="stSidebar"] [data-testid="stExpander"] summary {
+  justify-content: flex-start;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+}
+
+/* ── Live theme colors (set by the script in app.py, no refresh needed) ────── */
+:root[data-app-theme="light"] {
+  --card: #ffffff;
+  --card-border: #d9e4df;
+  --accent: #488f71;
+  --text: #1f2d28;
+}
+:root[data-app-theme="dark"] {
+  --card: #16241f;
+  --card-border: #24362f;
+  --accent: #6aaa96;
+  --text: #e6efeb;
+}
+
+/* Chart text follows the theme instead of waiting for a rerun */
+.stPlotlyChart text {
+  fill: var(--text) !important;
+  transition: fill 0.3s ease;
+}
+
+/* Keep the script's frame out of the layout */
+.st-key-theme_hook {
+  position: absolute;
+  height: 0;
+  overflow: hidden;
+  margin: 0;
+}
+
+/* Scroll hint under the data table */
+.st-key-table_hint {
+  text-align: center;
+}
+.st-key-table_hint [data-testid="stCaptionContainer"] {
+  max-width: none;
+}
+
+/* ── Header: hide the anchor link icon, keep the caption on one line ───────── */
+[data-testid="stHeaderActionElements"],
+[data-testid="stHeading"] a {
+  display: none !important;
+}
+
+@media (min-width: 641px) {
+  [data-testid="stMain"] [data-testid="stCaptionContainer"] {
+    max-width: none;
+    text-wrap: nowrap;
+  }
+}
+/* ── Responsive grids ──────────────────────────────────────────────────────── */
+/* Tablet: KPI cards 3 across, insight cards 2 across */
+@media (max-width: 1100px) {
+  .st-key-kpi_row [data-testid="stHorizontalBlock"],
+  .st-key-insight_row [data-testid="stHorizontalBlock"] {
+    flex-wrap: wrap;
+  }
+  .st-key-kpi_row [data-testid="stColumn"] {
+    flex: 1 1 calc(33.333% - 1rem);
+    min-width: calc(33.333% - 1rem);
+  }
+  .st-key-insight_row [data-testid="stColumn"] {
+    flex: 1 1 calc(50% - 1rem);
+    min-width: calc(50% - 1rem);
+  }
+}
+
+/* Phone: KPI cards 2 across, everything else stacks */
+@media (max-width: 640px) {
+  .st-key-kpi_row [data-testid="stColumn"] {
+    flex: 1 1 calc(50% - 1rem);
+    min-width: calc(50% - 1rem);
+  }
+  .st-key-insight_row [data-testid="stColumn"],
+  .st-key-chart_row_1 [data-testid="stColumn"],
+  .st-key-chart_row_2 [data-testid="stColumn"] {
+    flex: 1 1 100%;
+    min-width: 100%;
+  }
+  .st-key-chart_row_1 [data-testid="stHorizontalBlock"],
+  .st-key-chart_row_2 [data-testid="stHorizontalBlock"] {
+    flex-wrap: wrap;
+  }
+}
+
+/* ── Respect reduced motion ────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .stApp,
+  [data-testid="stSidebar"],
+  [data-testid="stHeader"],
+  [class*="st-key-card_"] {
+    transition: none;
+  }
+}
